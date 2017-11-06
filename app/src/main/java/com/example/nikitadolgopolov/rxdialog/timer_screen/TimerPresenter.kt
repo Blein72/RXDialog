@@ -7,4 +7,6 @@ package com.example.nikitadolgopolov.rxdialog.timer_screen
 interface TimerPresenter {
 
     fun startTimer()
+
+    fun closeDialog()
 }

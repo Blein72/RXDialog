@@ -17,11 +17,15 @@ class TimerPresenterImpl @Inject
     override fun startTimer() {
         Observable.just(String)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .delay(5000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onComplete = {view.showCompleteDialog()}
 
                 )
+    }
+
+    override fun closeDialog() {
+        view.closeDialog()
     }
 }

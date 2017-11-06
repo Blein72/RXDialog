@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.nikitadolgopolov.rxdialog.R
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_timer.*
 import javax.inject.Inject
 
@@ -21,8 +20,6 @@ import javax.inject.Inject
  * on 02/11/2017.
  */
 class TimerScreenFragment: Fragment(),TimerFragmentView {
-
-    private val onScreenDisposable = CompositeDisposable()
 
     private var isDialogShown:Boolean = false
     private lateinit var dialog:AlertDialog
@@ -42,17 +39,15 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance=true
 
         setupComponent()
 
         setupDialog()
     }
 
-    protected override fun onResume() {
+    override fun onResume() {
         super.onResume()
-
-        onScreenDisposable.add(
-                mainViewModel.actionTrigger.observe().subscribe({ aBoolean -> showConfirmationDialog() }))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -69,20 +64,23 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
         builder.setMessage("Your time is up")
                 .setTitle("Timer")
         builder.setPositiveButton("Finish", DialogInterface.OnClickListener { dialog, id ->
-            isDialogShown=false
-            dialog.dismiss()
+           presenter.closeDialog()
             // User clicked OK button
         })
         dialog = builder.create()
     }
 
-    private fun showDialog() {
-
-        dialog.show().s
-    }
-
     override fun onPause() {
         super.onPause()
         dialog.dismiss()
+    }
+
+    override fun closeDialog() {
+        isDialogShown=false
+        dialog.dismiss()
+    }
+
+    private fun showDialog() {
+        dialog.show()
     }
 }

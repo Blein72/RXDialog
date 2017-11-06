@@ -6,7 +6,7 @@ package com.example.nikitadolgopolov.rxdialog.timer_screen
  */
 interface TimerFragmentView {
 
-
-
     fun showCompleteDialog()
+
+    fun closeDialog()
 }
