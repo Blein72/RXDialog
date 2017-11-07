@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.nikitadolgopolov.rxdialog.R
+import com.example.nikitadolgopolov.rxdialog.timer_screen.dialog.TimerDialog
 import kotlinx.android.synthetic.main.fragment_timer.*
 import javax.inject.Inject
 
@@ -21,16 +22,13 @@ import javax.inject.Inject
  */
 class TimerScreenFragment: Fragment(),TimerFragmentView {
 
-    private var isDialogShown:Boolean = false
-    private lateinit var dialog:AlertDialog
+
+    private lateinit var dialog:TimerDialog
 
     @Inject lateinit var presenter: TimerPresenter
 
     override fun showCompleteDialog() {
-        if (!isDialogShown) {
-            showDialog()
-            isDialogShown=true
-        }
+        dialog.show()
     }
 
     fun setupComponent() {
@@ -44,10 +42,6 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
         setupComponent()
 
         setupDialog()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -76,11 +70,6 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
     }
 
     override fun closeDialog() {
-        isDialogShown=false
         dialog.dismiss()
-    }
-
-    private fun showDialog() {
-        dialog.show()
     }
 }

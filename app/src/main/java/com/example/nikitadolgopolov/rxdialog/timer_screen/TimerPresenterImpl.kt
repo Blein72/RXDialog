@@ -14,18 +14,28 @@ import javax.inject.Inject
 class TimerPresenterImpl @Inject
     constructor(private val view:TimerFragmentView) :TimerPresenter{
 
+    private var isDialogShown:Boolean = false
+
     override fun startTimer() {
         Observable.just(String)
                 .subscribeOn(Schedulers.io())
                 .delay(5000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onComplete = {view.showCompleteDialog()}
+                        onComplete = {showDialog()}
 
                 )
     }
 
+    private fun showDialog() {
+        if (!isDialogShown) {
+            view.showCompleteDialog()
+            isDialogShown=true
+        }
+    }
+
     override fun closeDialog() {
         view.closeDialog()
+        isDialogShown=false
     }
 }
