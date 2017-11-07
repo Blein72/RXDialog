@@ -1,10 +1,8 @@
 package com.example.nikitadolgopolov.rxdialog.timer_screen
 
-import android.content.DialogInterface
+import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,20 +57,9 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
     }
 
     private fun setupDialog() {
-        val builder = AlertDialog.Builder(activity)
-        builder.setMessage("Your time is up")
-                .setTitle("Timer")
-        builder.setPositiveButton("Finish", DialogInterface.OnClickListener { dialog, id ->
-           presenter.closeDialog()
-            // User clicked OK button
-        })
+
         dialog = TimerDialog()
         dialog.setTargetFragment(this,DIALOG_CLOSE_CODE)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        dialog.dismiss()
     }
 
     override fun closeDialog() {

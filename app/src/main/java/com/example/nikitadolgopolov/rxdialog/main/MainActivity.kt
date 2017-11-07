@@ -1,7 +1,7 @@
 package com.example.nikitadolgopolov.rxdialog.main
 
+import android.app.FragmentManager
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import com.example.nikitadolgopolov.rxdialog.App.App
 import com.example.nikitadolgopolov.rxdialog.R
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity()
     }
 
     private fun setupListFragment() {
-        val fragmentManager: FragmentManager = this.supportFragmentManager
+        val fragmentManager: FragmentManager = fragmentManager
         fragmentManager.beginTransaction()
                 .replace(R.id.content, TimerScreenFragment(), TIMER_FRAGMENT_TAG)
                 .commit()
