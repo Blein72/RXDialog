@@ -1,6 +1,7 @@
 package com.example.nikitadolgopolov.rxdialog.timer_screen
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -22,13 +23,17 @@ import javax.inject.Inject
  */
 class TimerScreenFragment: Fragment(),TimerFragmentView {
 
+    companion object {
+        val DIALOG_CLOSE_CODE=0
+    }
 
+    private val DIALOG_TAG="TIMER_DIALOG_TAG"
     private lateinit var dialog:TimerDialog
 
     @Inject lateinit var presenter: TimerPresenter
 
     override fun showCompleteDialog() {
-        dialog.show()
+        dialog.show(activity.fragmentManager,DIALOG_TAG)
     }
 
     fun setupComponent() {
@@ -61,7 +66,8 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
            presenter.closeDialog()
             // User clicked OK button
         })
-        dialog = builder.create()
+        dialog = TimerDialog()
+        dialog.setTargetFragment(this,DIALOG_CLOSE_CODE)
     }
 
     override fun onPause() {
@@ -71,5 +77,13 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
 
     override fun closeDialog() {
         dialog.dismiss()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode==TimerScreenFragment.DIALOG_CLOSE_CODE) {
+            presenter.closeDialog()
+        }
     }
 }
