@@ -24,7 +24,16 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupListFragment()
+        val fragment=fragmentManager.findFragmentByTag(TIMER_FRAGMENT_TAG)
+        if (fragment!=null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content, fragment, TIMER_FRAGMENT_TAG)
+                    .commit()
+        } else {
+            setupListFragment()
+        }
+
+        //setupListFragment()
 
     }
 

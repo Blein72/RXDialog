@@ -31,7 +31,11 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
     @Inject lateinit var presenter: TimerPresenter
 
     override fun showCompleteDialog() {
-        dialog.show(activity.fragmentManager,DIALOG_TAG)
+
+        val transaction = activity.fragmentManager.beginTransaction()
+        transaction.add(dialog, DIALOG_TAG)
+        transaction.commitAllowingStateLoss()
+        //dialog.show(activity.fragmentManager,DIALOG_TAG)
     }
 
     fun setupComponent() {
@@ -53,7 +57,7 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        timerButton.setOnClickListener(View.OnClickListener { presenter.startTimer() })
+        timerButton.setOnClickListener({ presenter.startTimer() })
     }
 
     private fun setupDialog() {
@@ -73,4 +77,6 @@ class TimerScreenFragment: Fragment(),TimerFragmentView {
             presenter.closeDialog()
         }
     }
+
+
 }

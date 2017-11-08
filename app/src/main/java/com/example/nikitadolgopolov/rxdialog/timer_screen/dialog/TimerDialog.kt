@@ -23,9 +23,8 @@ class TimerDialog : DialogFragment() {
         retainInstance = true
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
-    }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            super.onCreateDialog(savedInstanceState)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.dialog_complete_timer, container, false)
@@ -41,8 +40,15 @@ class TimerDialog : DialogFragment() {
     }
 
     private fun sendResult() {
-        val intent:Intent = Intent()
+        val intent = Intent()
         targetFragment.onActivityResult(targetRequestCode,TimerScreenFragment.DIALOG_CLOSE_CODE,intent)
+    }
+
+    override fun onDestroyView() {
+        if (dialog != null && retainInstance) {
+            dialog.setDismissMessage(null)
+        }
+        super.onDestroyView()
     }
 
 
